@@ -1,0 +1,1 @@
+void test_run_all(void);
