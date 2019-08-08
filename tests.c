@@ -33,85 +33,88 @@ static void test_init(void)
 static void test_up(void) 
 {
 	level = hysteresis(14);
-	test_result("level 0", level, 0);
+	test_result("up: 0", level, 0);
 	
 	level = hysteresis(16);
-	test_result("level 1", level, 1);
+	test_result("up: 1", level, 1);
 	
 	level = hysteresis(41);
-	test_result("level 2", level, 2);
+	test_result("up: 2", level, 2);
 	
 	level = hysteresis(66);
-	test_result("level 3", level, 3);
+	test_result("up: 3", level, 3);
 	
 	level = hysteresis(91);
-	test_result("level 4", level, 4);
+	test_result("up: 4", level, 4);
 }
 
 static void test_down(void)
 {
 	level = hysteresis(90);
-	test_result("level 4", level, 4);
+	test_result("down 4", level, 4);
 	
-	level = hysteresis(85);
-	test_result("level 3", level, 3);
+	level = hysteresis(84);
+	test_result("down 3", level, 3);
 	
-	level = hysteresis(60);
-	test_result("level 2", level, 2);
+	level = hysteresis(59);
+	test_result("down 2", level, 2);
 	
-	level = hysteresis(35);
-	test_result("level 1", level, 1);
+	level = hysteresis(34);
+	test_result("down 1", level, 1);
 	
-	level = hysteresis(10);
-	test_result("level 0", level, 0);
+	level = hysteresis(9);
+	test_result("down 0", level, 0);
 }
 
-static void test_edges(void)
+static void test_thresholds(void)
 {
 	level = hysteresis(15);
-	test_result("level 1", level, 1);
+	test_result("threshold 15", level, 1);
 	
 	level = hysteresis(40);
-	test_result("level 2", level, 2);
+	test_result("threshold 40", level, 2);
 	
 	level = hysteresis(65);
-	test_result("level 3", level, 3);
+	test_result("threshold 65", level, 3);
 	
 	level = hysteresis(90);
-	test_result("level 4", level, 4);
+	test_result("threshold 90", level, 4);
 	
 	level = hysteresis(85);
-	test_result("level 3", level, 3);
+	test_result("threshold 85", level, 3);
 	
 	level = hysteresis(60);
-	test_result("level 2", level, 2);
+	test_result("threshold 60", level, 2);
 	
 	level = hysteresis(35);
-	test_result("level 1", level, 1);
+	test_result("threshold 35", level, 1);
 	
 	level = hysteresis(10);
-	test_result("level 0", level, 0);
+	test_result("threshold 10", level, 0);
 }
 
 static void test_jumps(void)
 {
 	level = hysteresis(16);
-	test_result("level 1", level, 1);
+	test_result("jumps 1", level, 1);
 	
 	level = hysteresis(75);
-	test_result("level 3", level, 3);
+	test_result("jumps 1 to 3", level, 3);
 	
 	level = hysteresis(100);
-	test_result("level 4", level, 4);
+	test_result("jumps 4", level, 4);
 	
 	level = hysteresis(50);
-	test_result("level 2", level, 2);
+	test_result("jumps 4 to 2", level, 2);
 }
 
 static void test_outofrange(void)
 {
+    level = hysteresis(90);
+	test_result("out of range init", level, 4);
+    
 	level = hysteresis(101);
-	test_result("level 4", level, 4);
+	test_result("out of range > 100", level, 4);
 }
 
 void test_run_all(void) 
@@ -119,7 +122,7 @@ void test_run_all(void)
 	test_init();
 	test_up();
 	test_down();
-	test_edges();
+	test_thresholds();
 	test_jumps();
 	test_outofrange();
 	
