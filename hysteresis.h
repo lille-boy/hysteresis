@@ -2,15 +2,16 @@
 
 #define DEBUG 0
 
-#define TABLE_LENGTH 4
-
-typedef struct s_transition
-{
-	int lvl;
-	unsigned int down;
-	unsigned int up;
-} t_transition;
-
-unsigned int hysteresis(unsigned int new_percentage);
+/******************************************************************************
+ * Function hysteresis:
+ * - Translates a percentage into a level
+ * - The output "sticks" to its level around defined values to avoid toggling
+ * - For example, output could represent the 4 speed levels of a fan, according
+ *   to a temperature input.
+ *
+ * Input: percentage between 0 and 100.
+ * Output: level between 0 and 4.
+ *****************************************************************************/
+unsigned int hysteresis(unsigned int input_percent);
 
 #endif
