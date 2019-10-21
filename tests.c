@@ -18,7 +18,7 @@ static void test_result(const char *test_name, unsigned int level, unsigned int 
 		fail++;
 		if(DEBUG >= 1) {
 			printf("%s: fail - ", test_name);
-            printf("level: %d, expected: %d.\n", level, expected);
+            printf("returned level: %d, expected: %d.\n", level, expected);
 		}
 	}
 
@@ -28,43 +28,43 @@ static void test_result(const char *test_name, unsigned int level, unsigned int 
 static void test_init(void)
 {
 	level = hysteresis(0);
-	test_result("init", level, 0);
+	test_result("init = 0", level, 0);
 }
 
 static void test_up(void)
 {
 	level = hysteresis(14);
-	test_result("up: 0", level, 0);
+	test_result("up from 0 to 14", level, 0);
 	
 	level = hysteresis(16);
-	test_result("up: 1", level, 1);
+	test_result("up from 14 to 16", level, 1);
 	
 	level = hysteresis(41);
-	test_result("up: 2", level, 2);
+	test_result("up from 16 to 41", level, 2);
 	
 	level = hysteresis(66);
-	test_result("up: 3", level, 3);
+	test_result("up from 41 to 66", level, 3);
 	
 	level = hysteresis(91);
-	test_result("up: 4", level, 4);
+	test_result("up from 66 to 91", level, 4);
 }
 
 static void test_down(void)
 {
 	level = hysteresis(86);
-	test_result("down 4", level, 4);
+	test_result("down from 91 to 86", level, 4);
 	
 	level = hysteresis(84);
-	test_result("down 3", level, 3);
+	test_result("down from 86 to 84", level, 3);
 	
 	level = hysteresis(59);
-	test_result("down 2", level, 2);
+	test_result("down from 84 to 59", level, 2);
 	
 	level = hysteresis(34);
-	test_result("down 1", level, 1);
+	test_result("down from 59 to 34", level, 1);
 	
 	level = hysteresis(9);
-	test_result("down 0", level, 0);
+	test_result("down from 34 to 9", level, 0);
 }
 
 static void test_thresholds(void)
@@ -97,29 +97,29 @@ static void test_thresholds(void)
 static void test_same_level(void)
 {
 	level = hysteresis(0);
-	test_result("level 0", level, 0);
+	test_result("set level 0", level, 0);
 	level = hysteresis(14);
-	test_result("level 0", level, 0);
+	test_result("same level from 0 to 14", level, 0);
 
 	level = hysteresis(16);
-	test_result("level 1", level, 1);
+	test_result("set level 1", level, 1);
 	level = hysteresis(39);
-	test_result("level 1", level, 1);
+	test_result("same level from 16 to 39", level, 1);
 
 	level = hysteresis(41);
-	test_result("level 2", level, 2);
+	test_result("set level 2", level, 2);
 	level = hysteresis(64);
-	test_result("level 2", level, 2);
+	test_result("same level from 41 to 64", level, 2);
 
 	level = hysteresis(66);
-	test_result("level 3", level, 3);
+	test_result("set level 3", level, 3);
 	level = hysteresis(89);
-	test_result("level 3", level, 3);
+	test_result("same level from 66 to 89", level, 3);
 
 	level = hysteresis(91);
-	test_result("level 4", level, 4);
+	test_result("set level 4", level, 4);
 	level = hysteresis(100);
-	test_result("level 4", level, 4);
+	test_result("same level from 91 to 100", level, 4);
 }
 
 
@@ -127,22 +127,22 @@ static void test_jumps(void)
 {
     level = hysteresis(16); /* go to level 1 */
     level = hysteresis(75);
-	test_result("jumps 1 to 3", level, 3);
+	test_result("jump from 16 to 75", level, 3);
     
     level = hysteresis(5);
-	test_result("jumps 3 to 0", level, 0);
+	test_result("jump from 75 to 5", level, 0);
     
     level = hysteresis(100);
-    test_result("jumps 0 to 4", level, 4);
+    test_result("jump from 5 to 100", level, 4);
     
     level = hysteresis(50);
-	test_result("jumps 4 to 2", level, 2);
+	test_result("jump from 100 to 50", level, 2);
     
 	level = hysteresis(91);
-	test_result("jumps 2 to 4", level, 4);	
+	test_result("jump from 50 to 91", level, 4);	
     
     level = hysteresis(25);
-	test_result("jumps 4 to 1", level, 1);
+	test_result("jump from 91 to 25", level, 1);
 }
 
 void test_run_all(void)
