@@ -10,14 +10,15 @@ static void test_result(const char *test_name, unsigned int level, unsigned int 
 {
 	if(level == expected) {
 		pass++;
-		if(DEBUG) {
+		if(DEBUG >= 2) {
 			printf("%s: pass\n", test_name);
 		}
 	}
 	else {
 		fail++;
-		if(DEBUG) {
-			printf("%s: fail\n", test_name);
+		if(DEBUG >= 1) {
+			printf("%s: fail - ", test_name);
+            printf("level: %d, expected: %d.\n", level, expected);
 		}
 	}
 
@@ -110,12 +111,12 @@ static void test_same_level(void)
 	level = hysteresis(64);
 	test_result("level 2", level, 2);
 
-	level = hysteresis(65);
+	level = hysteresis(66);
 	test_result("level 3", level, 3);
 	level = hysteresis(89);
 	test_result("level 3", level, 3);
 
-	level = hysteresis(90);
+	level = hysteresis(91);
 	test_result("level 4", level, 4);
 	level = hysteresis(100);
 	test_result("level 4", level, 4);
@@ -144,15 +145,6 @@ static void test_jumps(void)
 	test_result("jumps 4 to 1", level, 1);
 }
 
-static void test_outofrange(void)
-{
-    level = hysteresis(90);
-	test_result("out of range init", level, 4);
-    
-	level = hysteresis(101);
-	test_result("out of range > 100", level, 4);
-}
-
 void test_run_all(void)
 {
 	test_init();
@@ -161,7 +153,6 @@ void test_run_all(void)
 	test_thresholds();
 	test_same_level();
 	test_jumps();
-	test_outofrange();
 
 	printf("Tests Passed:   %d\n", pass);
 	printf("Tests Failed:   %d\n", fail);
