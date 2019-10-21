@@ -26,9 +26,9 @@
  *   |     |  |       .  .      .  .       .  .
  *   |     v  ^       .  .      .  .       .  .
  *   |     |  |       .  .      .  .       .  .
- * 0_|_____|__|_______________________________________|  percent
- *         |  |       |  |       |  |      |  |       |
- *        10  15     35  40     60  65    85  90     100
+ * 0_|_____|__|______________________________________|  percent
+ *         |  |       |  |      |  |      |  |       |
+ *        10  15     35  40    60  65    85  90     100
  *
  */
 
@@ -55,7 +55,7 @@ unsigned int hysteresis(unsigned int input_percent)
     static unsigned int discrete_level = 0;
     static unsigned int prev_input_precent = 0;
 
-    if (DEBUG) {
+    if (DEBUG >= 2) {
         printf("input: %d, prev. input: %d, ", input_percent, prev_input_precent);
     }
 
@@ -76,7 +76,7 @@ unsigned int hysteresis(unsigned int input_percent)
 
     prev_input_precent = input_percent;
 
-    if (DEBUG) {
+    if (DEBUG >= 2) {
         printf("level: %d\n", discrete_level);
     }
 
