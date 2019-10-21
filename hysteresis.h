@@ -1,6 +1,6 @@
 #ifndef HYSTERESIS_H
 
-#define DEBUG 0
+#define DEBUG 1
 
 /******************************************************************************
  * Function hysteresis:
