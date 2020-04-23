@@ -1,4 +1,5 @@
 #ifndef HYSTERESIS_H
+#define HYSTERESIS_H
 
 #define DEBUG 1
 
@@ -14,4 +15,4 @@
  *****************************************************************************/
 unsigned int hysteresis(unsigned int input_percent);
 
-#endif
+#endif /* HYSTERESIS_H */
